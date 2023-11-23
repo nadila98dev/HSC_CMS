@@ -83,7 +83,7 @@ export default function Dashboard() {
             Total User
           </h5>
           <p className=" text-gray-700 font-semibold text-xl dark:text-gray-400 mx-auto">
-            {items.user}
+            {items?.user}
           </p>
         </a>
         <a
@@ -94,7 +94,7 @@ export default function Dashboard() {
             Total Category
           </h5>
           <p className=" text-gray-700 font-semibold text-xl dark:text-gray-400 mx-auto">
-            {items.category}
+            {items?.category}
           </p>
         </a>
         <a
@@ -105,7 +105,7 @@ export default function Dashboard() {
             Total Items
           </h5>
           <p className=" text-gray-700 font-semibold text-xl dark:text-gray-400 mx-auto">
-            {items.items}
+            {items?.items}
           </p>
         </a>
         <a
@@ -116,7 +116,7 @@ export default function Dashboard() {
             Total Transaction
           </h5>
           <p className=" text-gray-700 font-semibold text-xl dark:text-gray-400 mx-auto">
-            {items.transaction}
+            {items?.transaction}
           </p>
         </a>
       </div>

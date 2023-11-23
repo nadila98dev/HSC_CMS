@@ -1,9 +1,10 @@
 // src/store/store.js
 import { configureStore } from '@reduxjs/toolkit';
-import categoryReducer from './slices/categorySlice';
 import itemReducer from './slices/itemsSlice';
 import transactionReducer from './slices/transactionsSlice';
-import usersSlice from './slices/usersSlice';
+// import usersSlice from './slices/usersSlice';
+import categoryReducer from './category/slices';
+import usersReducer from './users/slices';
 // import transactionReducer from '../slices/transactionSlice';
 
 const store = configureStore({
@@ -11,7 +12,7 @@ const store = configureStore({
     category: categoryReducer,
     items: itemReducer,
     transaction: transactionReducer,
-    users: usersSlice,
+    users: usersReducer,
     // Add other reducers if needed
   },
 });

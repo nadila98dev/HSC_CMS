@@ -29,9 +29,10 @@ export default function UsersCreate() {
       password: form.password,
     };
 
-    const res = await axios.post(`${config.api_image}/users`, payload);
-    if (res?.data?.error === false) {
-      toast.success("Created Category Success", {
+    const res = await postData(`/admin`, payload);
+    console.log(res);
+    if (res?.data?.success === true) {
+      toast.success("Created User Success", {
         position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
@@ -42,7 +43,7 @@ export default function UsersCreate() {
         theme: "light",
       });
       navigate("/users");
-    } else if (res?.response?.data?.error) {
+    } else if (res?.response?.data?.success === false) {
       toast.error(res?.response?.data?.message, {
         position: "top-right",
         autoClose: 5000,
@@ -132,7 +133,7 @@ export default function UsersCreate() {
               htmlFor="password"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Name
+              Password
             </label>
             <input
               type="password"

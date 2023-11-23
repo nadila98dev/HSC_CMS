@@ -14,9 +14,10 @@ export default function CategoryEdit() {
     name: "",
     image: null,
   });
+  console.log(form);
   const fetchData = async () => {
     const res = await getData(`/categories/${id}`);
-    if (res.data.error === false) {
+    if (res.data.success === true) {
       setForm({
         ...form,
         name: res.data.data.name,
@@ -83,7 +84,7 @@ export default function CategoryEdit() {
     };
 
     const res = await putData(`/categories/${id}`, payload);
-    if (res?.data?.error === false) {
+    if (res?.data?.success === true) {
       toast.success("Created Category Success", {
         position: "top-right",
         autoClose: 3000,
@@ -179,7 +180,7 @@ export default function CategoryEdit() {
             </p>
             {form.image ? (
               <img
-                src={`${config.api_image}/${form.image}`}
+                src={`${config.api_host}/${form.image}`}
                 className="w-44 mt-5 rounded-md"
               />
             ) : (

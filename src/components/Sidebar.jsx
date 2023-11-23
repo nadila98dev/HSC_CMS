@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -27,7 +28,7 @@ export default function Sidebar() {
       progress: undefined,
       theme: "light",
     });
-    localStorage.clear();
+    Cookies.remove("token");
     window.location.href = "/login";
   };
 

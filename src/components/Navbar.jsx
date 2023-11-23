@@ -1,16 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { config } from "../config";
+import Cookies from "js-cookie";
 
 export default function Navbar() {
   const [data, setData] = useState({});
-  const token = localStorage.getItem("token");
+  const token = Cookies.get("token");
   const fetchData = async () => {
-    const res = await axios(`${config.api_image}/users/detail`, {
+    const res = await axios(`${config.api_host_url}/auth/detail`, {
       headers: {
         Authorization: "Bearer " + token,
       },
     });
+    console.log(res);
     setData(res?.data?.data);
   };
 

@@ -1,42 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar";
-import Navbar from "../../components/Navbar";
 import Breadcrumb from "../../components/Breadcrumb";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import RouteAdmin from "../Route";
-import { deleteData, getData } from "../../utils/fetch";
-import { config } from "../../config";
+import { deleteData } from "../../utils/fetch";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import TableCategories from "./table";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../../redux/slices/categorySlice";
+import { fetchCategories } from "../../redux/category/actions";
 
 export default function Category() {
-  const itemPerPage = 5;
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemPrev, setItemPrev] = useState(0);
-
   const dispatch = useDispatch();
   const items = useSelector((state) => state.category.data);
+  const currentPage = useSelector((state) => state.category.currentPage);
+  const pageCount = useSelector((state) => state.category.totalPages);
 
-  useEffect(() => {
-    const itemsCount = itemPrev + itemPerPage;
-    setCurrentItems(items.slice(itemPrev, itemsCount));
-    setPageCount(Math.ceil(items.length / itemPerPage));
-  }, [itemPrev, itemPerPage, items]);
+  const limit = 2 || 1;
+
+  const [toPage, setToPage] = useState(currentPage);
 
   // Invoke when user click to request another page.
   const handlePageClick = ({ selected }) => {
-    const itemsPrev = (selected * itemPerPage) % items.length;
-    setItemPrev(itemsPrev);
+    console.log(selected + 1);
+    setToPage(selected + 1);
   };
 
   useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+    dispatch(fetchCategories(toPage, limit));
+  }, [dispatch, toPage]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -113,8 +105,8 @@ export default function Category() {
         </Link>
       </div>
       <TableCategories
-        currentItems={currentItems}
-        itemPrev={itemPrev}
+        currentItems={items}
+        page={currentPage}
         handleDelete={handleDelete}
       />
       <div className="mt-3 text-center">

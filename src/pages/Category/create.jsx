@@ -73,7 +73,7 @@ export default function CategoryCreate() {
     };
 
     const res = await postData("/categories", payload);
-    if (res?.data?.error === false) {
+    if (res?.data?.success === true) {
       toast.success("Created Category Success", {
         position: "top-right",
         autoClose: 3000,
@@ -148,7 +148,7 @@ export default function CategoryCreate() {
               placeholder=""
               required
               name="name"
-              value={form.name}
+              value={form?.name}
               onChange={handleChange}
             />
           </div>

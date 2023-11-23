@@ -1,43 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../components/Sidebar";
-import Navbar from "../../components/Navbar";
 import Breadcrumb from "../../components/Breadcrumb";
 import { Link } from "react-router-dom";
 import Pagination from "../../components/Pagination";
 import RouteAdmin from "../Route";
-import { deleteData, getData } from "../../utils/fetch";
-import { config } from "../../config";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import TableCategories from "./table";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../redux/slices/usersSlice";
-import axios from "axios";
+import { deleteData } from "../../utils/fetch";
+import { fetchUsers } from "../../redux/users/actions";
 
 export default function Users() {
-  const itemPerPage = 5;
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemPrev, setItemPrev] = useState(0);
-
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.users.data);
+  const users = useSelector((state) => state.users.data);
+  const currentPage = useSelector((state) => state.users.currentPage);
+  const pageCount = useSelector((state) => state.users.totalPages);
 
-  useEffect(() => {
-    const itemsCount = itemPrev + itemPerPage;
-    setCurrentItems(items.slice(itemPrev, itemsCount));
-    setPageCount(Math.ceil(items.length / itemPerPage));
-  }, [itemPrev, itemPerPage, items]);
+  const limit = 5 || 1;
+
+  const [toPage, setToPage] = useState(currentPage);
 
   // Invoke when user click to request another page.
   const handlePageClick = ({ selected }) => {
-    const itemsPrev = (selected * itemPerPage) % items.length;
-    setItemPrev(itemsPrev);
+    console.log(selected + 1);
+    setToPage(selected + 1);
   };
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    dispatch(fetchUsers(toPage, limit));
+  }, [dispatch, toPage]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -51,7 +42,8 @@ export default function Users() {
       cancelButtonText: "Batal",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const res = await axios.delete(`${config.api_image}/users/${id}`);
+        const res = await deleteData(`/admin/${id}`);
+        console.log(res);
         toast.success(res.data.message, {
           position: "top-right",
           autoClose: 3000,
@@ -70,7 +62,7 @@ export default function Users() {
   return (
     <RouteAdmin>
       <div className=" my-3 flex justify-between items-center">
-        <h1 className=" font-bold text-xl">Category Page</h1>
+        <h1 className=" font-bold text-xl">Users Page</h1>
         <Breadcrumb firsttag={"Home"} secondtag={"Category"} />
       </div>
       <div className="flex flex-wrap justify-between mb-5 items-center">
@@ -114,8 +106,8 @@ export default function Users() {
         </Link>
       </div>
       <TableCategories
-        currentItems={currentItems}
-        itemPrev={itemPrev}
+        currentItems={users}
+        page={currentPage}
         handleDelete={handleDelete}
       />
       <div className="mt-3 text-center">

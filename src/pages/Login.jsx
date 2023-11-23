@@ -16,8 +16,9 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    const res = await fetchLogin("/auth/signin", form);
-    if (res?.data?.error === false) {
+    const res = await fetchLogin("/auth/admin/signin", form);
+    console.log(res);
+    if (res?.data?.success === true) {
       toast.success(res.data.message, {
         position: "top-right",
         autoClose: 3000,
@@ -28,9 +29,7 @@ export default function Login() {
         progress: undefined,
         theme: "light",
       });
-      localStorage.setItem("token", res.data.token);
       Cookies.set("token", res.data.token, { expires: 7 });
-
       navigate("/");
     } else {
       toast.error(res.response.data.message, {

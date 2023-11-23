@@ -1,9 +1,10 @@
 import axios from "axios";
 import { config } from "../config";
+import Cookies from "js-cookie";
 
 export async function fetchLogin(url, payload) {
   try {
-    const res = await axios.post(`${config.api_host_dev}${url}`, payload);
+    const res = await axios.post(`${config.api_host_url}${url}`, payload);
     return res;
   } catch (err) {
     return err;
@@ -12,8 +13,8 @@ export async function fetchLogin(url, payload) {
 
 export async function getData(url, params) {
   try {
-    const token = localStorage.getItem("token") ?? {};
-    const res = await axios.get(`${config.api_host_dev}${url}`, {
+    const token = Cookies.get("token") ?? {};
+    const res = await axios.get(`${config.api_host_url}${url}`, {
       params,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -27,13 +28,13 @@ export async function getData(url, params) {
 
 export async function postData(url, payload, formData) {
   try {
-    const token = localStorage.getItem("token")
-      ? localStorage.getItem("token")
+    const token = Cookies.get("token")
+      ? Cookies.get("token")
       : {};
-    const res = await axios.post(`${config.api_host_dev}${url}`, payload, {
+    const res = await axios.post(`${config.api_host_url}${url}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
-        "Content-Type": "multipart/form-data",
+        // "Content-Type": "multipart/form-data",
       },
     });
     return res;
@@ -44,9 +45,9 @@ export async function postData(url, payload, formData) {
 
 export async function putData(url, payload) {
   try {
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("token");
 
-    const res = await axios.put(`${config.api_host_dev}${url}`, payload, {
+    const res = await axios.put(`${config.api_host_url}${url}`, payload, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -61,11 +62,11 @@ export async function putData(url, payload) {
 
 export async function deleteData(url) {
   try {
-    const token  = localStorage.getItem("token")
-      ? localStorage.getItem("token")
+    const token  = Cookies.get("token")
+      ? Cookies.get("token")
       : {};
 
-    const res = await axios.delete(`${config.api_host_dev}${url}`, {
+    const res = await axios.delete(`${config.api_host_url}${url}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

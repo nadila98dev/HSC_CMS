@@ -33,7 +33,7 @@ const Pagination = (props) => {
       }
       previousLinkClassName={"page-link"}
       activeClassName={
-        "flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-sky-200 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+        "flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-slate-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
       }
       //   forcePage={page - 1}
     />
