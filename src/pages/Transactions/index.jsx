@@ -8,33 +8,9 @@ import RouteAdmin from "../Route";
 import TableItems from "./table";
 import { getData } from "../../utils/fetch";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTransactions } from "../../redux/slices/transactionsSlice";
+// import { fetchTransactions } from "../../redux/slices/transactionsSlice";
 
 export default function Transactions() {
-  const itemPerPage = 5;
-  const [currentItems, setCurrentItems] = useState(null);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemPrev, setItemPrev] = useState(0);
-
-  const dispatch = useDispatch();
-  const items = useSelector((state) => state.transaction.data);
-
-  useEffect(() => {
-    const itemsCount = itemPrev + itemPerPage;
-    setCurrentItems(items.slice(itemPrev, itemsCount));
-    setPageCount(Math.ceil(items.length / itemPerPage));
-  }, [itemPrev, itemPerPage, items]);
-
-  // Invoke when user click to request another page.
-  const handlePageClick = ({ selected }) => {
-    const itemsPrev = (selected * itemPerPage) % items.length;
-    setItemPrev(itemsPrev);
-  };
-
-  useEffect(() => {
-    dispatch(fetchTransactions());
-  }, [dispatch]);
-
   return (
     <RouteAdmin>
       <div className=" my-3 flex justify-between items-center">
@@ -73,9 +49,9 @@ export default function Transactions() {
           </div>
         </div>
       </div>
-      <TableItems currentItems={currentItems} itemPrev={itemPrev} />
+      {/* <TableItems currentItems={currentItems} itemPrev={itemPrev} /> */}
       <div className="mt-3 text-center">
-        <Pagination pages={pageCount} handlePageClick={handlePageClick} />
+        {/* <Pagination pages={pageCount} handlePageClick={handlePageClick} /> */}
       </div>
     </RouteAdmin>
   );

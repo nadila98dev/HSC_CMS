@@ -22,7 +22,6 @@ export default function Category() {
 
   // Invoke when user click to request another page.
   const handlePageClick = ({ selected }) => {
-    console.log(selected + 1);
     setToPage(selected + 1);
   };
 

@@ -8,8 +8,7 @@ export const fetchCategories = (page, limit) => async (dispatch) => {
     const response = await getData('/categories',{
         pageNumber: page,
         limit: limit
-    }); 
-    console.log(response)
+    });
 
       
     dispatch(fetchCategorySuccess(response.data));

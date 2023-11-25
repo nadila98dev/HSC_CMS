@@ -12,7 +12,7 @@ export default function Navbar() {
         Authorization: "Bearer " + token,
       },
     });
-    console.log(res);
+
     setData(res?.data?.data);
   };
 

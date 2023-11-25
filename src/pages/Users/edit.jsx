@@ -20,7 +20,7 @@ export default function UsersEdit() {
   const [updatePassword, setUpdatePassword] = useState(false);
   console.log(form);
   const fetchData = async () => {
-    const res = await axios(`${config.api_image}/users/${id}`);
+    const res = await axios(`${config.api_host_url}/admin/${id}`);
     if (res.data.error === false) {
       setForm({
         ...form,
@@ -45,7 +45,7 @@ export default function UsersEdit() {
     }
     console.log(payload);
 
-    const res = await axios.put(`${config.api_image}/users/${id}`, payload);
+    const res = await axios.put(`${config.api_host_url}/admin/${id}`, payload);
     if (res?.data?.error === false) {
       toast.success("Created Users Success", {
         position: "top-right",

@@ -83,7 +83,7 @@ export default function CategoryEdit() {
       image: form.image,
     };
 
-    const res = await putData(`/categories/${id}`, payload);
+    const res = await putData(`/categories/${id}`, payload, FormData);
     if (res?.data?.success === true) {
       toast.success("Created Category Success", {
         position: "top-right",

@@ -10,12 +10,11 @@ export default function Sidebar() {
     { title: "Category", src: "category", link: "/category", gap: true },
     { title: "Items", src: "items", link: "/items" },
     { title: "Transactions", link: "/transactions" },
-    { title: "Account", src: "account", link: "/users", gap: true },
+    { title: "Users", src: "account", link: "/users", gap: true },
     { title: "Logout", src: "logout", link: "/logout", gap: true },
   ];
 
   const location = useLocation();
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     toast.success("Logout Success", {

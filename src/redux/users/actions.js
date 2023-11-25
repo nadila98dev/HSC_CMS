@@ -9,7 +9,6 @@ export const fetchUsers = (page, limit) => async (dispatch) => {
       pageNumber: page,
       limit: limit
   }); 
-    console.log(response)
     dispatch(fetchUsersSuccess(response.data));
   } catch (error) {
     console.error('Error fetching categories:', error);

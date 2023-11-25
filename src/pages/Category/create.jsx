@@ -72,7 +72,7 @@ export default function CategoryCreate() {
       name: form.name,
     };
 
-    const res = await postData("/categories", payload);
+    const res = await postData("/categories", payload, FormData);
     if (res?.data?.success === true) {
       toast.success("Created Category Success", {
         position: "top-right",
