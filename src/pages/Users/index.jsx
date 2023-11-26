@@ -12,11 +12,15 @@ import { fetchUsers } from "../../redux/users/actions";
 
 export default function Users() {
   const dispatch = useDispatch();
+  const [keyword, setKeyword] = useState("");
   const users = useSelector((state) => state.users.data);
   const currentPage = useSelector((state) => state.users.currentPage);
-  const pageCount = useSelector((state) => state.users.totalPages);
+  // const pageCount = useSelector((state) => state.users.totalPages);
+  const currentItems = useSelector((state) => state.category.currentItems);
 
-  const limit = 5 || 1;
+  const limit = 5;
+
+  const page = Math.ceil(currentItems / limit);
 
   const [toPage, setToPage] = useState(currentPage);
 
@@ -27,8 +31,8 @@ export default function Users() {
   };
 
   useEffect(() => {
-    dispatch(fetchUsers(toPage, limit));
-  }, [dispatch, toPage]);
+    dispatch(fetchUsers(toPage, limit, keyword));
+  }, [dispatch, toPage, keyword]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -63,7 +67,7 @@ export default function Users() {
     <RouteAdmin>
       <div className=" my-3 flex justify-between items-center">
         <h1 className=" font-bold text-xl">Users Page</h1>
-        <Breadcrumb firsttag={"Home"} secondtag={"Category"} />
+        <Breadcrumb firsttag={"Home"} secondtag={"Users"} />
       </div>
       <div className="flex flex-wrap justify-between mb-5 items-center">
         <div className="  bg-white dark:bg-gray-900">
@@ -90,6 +94,8 @@ export default function Users() {
             </div>
             <input
               type="text"
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
               id="table-search"
               className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg max-w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
               placeholder="Search for items"
@@ -111,7 +117,7 @@ export default function Users() {
         handleDelete={handleDelete}
       />
       <div className="mt-3 text-center">
-        <Pagination pages={pageCount} handlePageClick={handlePageClick} />
+        <Pagination pages={page} handlePageClick={handlePageClick} />
       </div>
     </RouteAdmin>
   );

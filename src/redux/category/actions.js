@@ -1,13 +1,14 @@
 import { getData } from '../../utils/fetch';
 import { fetchCategoryFailure, fetchCategorySuccess, startFetchingCategory } from './slices';
 
-export const fetchCategories = (page, limit) => async (dispatch) => {
+export const fetchCategories = (page, limit, keyword) => async (dispatch) => {
   try {
     dispatch(startFetchingCategory())
 
     const response = await getData('/categories',{
         pageNumber: page,
-        limit: limit
+        limit: limit,
+        keyword: keyword
     });
 
       

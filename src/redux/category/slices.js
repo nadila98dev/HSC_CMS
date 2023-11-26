@@ -7,19 +7,20 @@ const categorySlice = createSlice({
     data: [],
     currentPage: 1,
     totalPages: 1,
-    totalItems: 1
+    totalItems: 1,
+    currentItems: 1
   },
   reducers: {
     startFetchingCategory: (state) => {
       state.loading = true;
     },
     fetchCategorySuccess: (state, action) => {
-        console.log(action)
       state.loading = false;
       state.data = action.payload.data;
       state.currentPage = action.payload.currentPage
       state.totalPages = action.payload.totalPages
       state.totalItems = action.payload.totalItems
+      state.currentItems = action.payload.currentItems
     //   state.error = null;
     },
     fetchCategoryFailure: (state, action) => {

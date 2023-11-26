@@ -14,9 +14,12 @@ export default function Category() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.category.data);
   const currentPage = useSelector((state) => state.category.currentPage);
-  const pageCount = useSelector((state) => state.category.totalPages);
+  // const pageCount = useSelector((state) => state.category.totalPages);
+  const currentItems = useSelector((state) => state.category.currentItems);
+  const [keyword, setKeyword] = useState("");
 
-  const limit = 2 || 1;
+  const limit = 5 || 1;
+  const page = Math.ceil(currentItems / limit);
 
   const [toPage, setToPage] = useState(currentPage);
 
@@ -26,8 +29,8 @@ export default function Category() {
   };
 
   useEffect(() => {
-    dispatch(fetchCategories(toPage, limit));
-  }, [dispatch, toPage]);
+    dispatch(fetchCategories(toPage, limit, keyword));
+  }, [dispatch, toPage, keyword]);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -87,6 +90,9 @@ export default function Category() {
               </svg>
             </div>
             <input
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              name="keyword"
               type="text"
               id="table-search"
               className="block p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg max-w-full bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
@@ -106,10 +112,11 @@ export default function Category() {
       <TableCategories
         currentItems={items}
         page={currentPage}
+        limit={limit}
         handleDelete={handleDelete}
       />
       <div className="mt-3 text-center">
-        <Pagination pages={pageCount} handlePageClick={handlePageClick} />
+        <Pagination pages={page} handlePageClick={handlePageClick} />
       </div>
     </RouteAdmin>
   );

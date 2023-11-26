@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-export default function Sidebar() {
+export default function Sidebar({ showNav }) {
+  console.log(showNav);
   const [open, setOpen] = useState(true);
   const Menus = [
     { title: "Dashboard", src: "dashboard", link: "/" },
@@ -34,13 +35,15 @@ export default function Sidebar() {
   return (
     <div
       className={`${
-        open ? "min-w-[200px] " : "w-20"
-      } duration-300  p-3 min-h-screen pt-8  bg-primary relative hidden md:block`}
+        open ? "min-w-[200px] " : "md:w-20 "
+      } duration-300  p-3 min-h-screen pt-8   bg-primary relative md:block ${
+        showNav ? "" : "hidden"
+      }`}
     >
       <img
         src={"/icon/arrow-left.png"}
         alt=""
-        className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-primary rounded-full bg-white p-2 transition-all duration-500 ${
+        className={`absolute cursor-pointer -right-3 top-9 w-7 border-2 border-primary rounded-full bg-white p-2 transition-all duration-500 hidden md:block ${
           open ? "" : "rotate-[180deg] "
         }`}
         onClick={() => setOpen(!open)}
