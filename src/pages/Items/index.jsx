@@ -9,10 +9,30 @@ import TableItems from "./table";
 import { deleteData, getData } from "../../utils/fetch";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-// import { fetchItems } from "../../redux/slices/itemsSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchItems } from "../../redux/items/action";
 
 export default function Items() {
+  const dispatch = useDispatch()
+  const items = useSelector((state) => state.items.data);
+  const currentPage = useSelector((state) => state.items.currentPage);
+  const currentItems = useSelector((state) => state.items.currentItems);
+  
+  const [keyword, setKeyword] = useState("")
+
+  const limit = 5 || 1
+  const page = Math.ceil(items.totalItems / limit)
+
+  const [toPage, setToPage] = useState(currentPage)
+
+  const handlePageClick = ({ selected }) => {
+    setToPage(selected + 1)
+  }
+
+  useEffect(() => {
+    dispatch(fetchItems(toPage, limit, keyword))
+  }, [dispatch, toPage, keyword])  
+
   const handleDelete = (id) => {
     Swal.fire({
       title: "Are you Sure Delete Items?",
@@ -88,12 +108,13 @@ export default function Items() {
         </Link>
       </div>
       <TableItems
-      // currentItems={currentItems}
-      // itemPrev={itemPrev}
-      // handleDelete={handleDelete}
+      currentItems={items}
+      page={currentPage}
+      limit={limit}
+      handleDelete={handleDelete}
       />
       <div className="mt-3 text-center">
-        {/* <Pagination pages={pageCount} handlePageClick={handlePageClick} /> */}
+        <Pagination pages={page} handlePageClick={handlePageClick} />
       </div>
     </RouteAdmin>
   );
