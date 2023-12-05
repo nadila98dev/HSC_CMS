@@ -81,6 +81,9 @@ export default function ItemsCreate() {
       categoryId: form.categoryId,
       description: form.description,
       price: form.price,
+      address: form.address,
+      positionlat: form.positionlat,
+      positionlng: form.positionlng,
       image: form.image,
     };
     const res = await postData("/items", payload);

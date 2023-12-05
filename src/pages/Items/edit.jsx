@@ -147,7 +147,7 @@ export default function ItemsEdit() {
   return (
     <TemplateCategory>
       <div className=" my-3 flex justify-between items-center">
-        <h1 className=" font-bold text-xl">Category Edit</h1>
+        <h1 className=" font-bold text-xl">Item Edit</h1>
         <Breadcrumb
           firsttag={"Home"}
           secondtag={"Category"}

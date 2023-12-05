@@ -16,34 +16,32 @@ export default function Login() {
   };
 
   const handleLogin = async () => {
-    const res = await fetchLogin("/auth/admin/signin", form);
-    console.log(res);
-    if (res?.data?.success === true) {
-      toast.success(res.data.message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      Cookies.set("token", res.data.token, { expires: 7 });
-      navigate("/");
-    } else {
-      toast.error(res.response.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+    try {
+      const res = await fetchLogin("/auth/admin/signin", form);
+      console.log(res);
+  
+      if (res && res.data && res.data.success === true) {
+        toast.success(res.data.message, {
+          // ... (your success toast configuration)
+        });
+  
+        Cookies.set("token", res.data.token, { expires: 7 });
+        navigate("/");
+      } else {
+        // Assuming res.response is an Axios error object
+        toast.error(res?.response?.data?.message || "An error occurred", {
+          // ... (your error toast configuration)
+        });
+      }
+    } catch (error) {
+      // Handle unexpected errors or network issues
+      console.error("Error during login:", error);
+      toast.error("An unexpected error occurred", {
+        // ... (your error toast configuration)
       });
     }
   };
+  
   return (
     <div className="bg-primary h-screen flex justify-center items-center">
       <div className="bg-white rounded-xl shadow-slate-400 shadow-md p-5 ">
