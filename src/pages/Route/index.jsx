@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar";
 
 export default function RouteAdmin({ children }) {
   const [showNav, setShowNav] = useState(false);
-  console.log(showNav);
+console.log(showNav);
   return (
     <div className="flex">
       <Sidebar showNav={showNav} />

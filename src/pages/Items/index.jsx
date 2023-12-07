@@ -21,7 +21,7 @@ export default function Items() {
   const [keyword, setKeyword] = useState("")
 
   const limit = 5 || 1
-  const page = Math.ceil(items.totalItems / limit)
+  const page = Math.ceil(currentItems / limit)
 
   const [toPage, setToPage] = useState(currentPage)
 

@@ -150,7 +150,7 @@ export default function ItemsEdit() {
         <h1 className=" font-bold text-xl">Item Edit</h1>
         <Breadcrumb
           firsttag={"Home"}
-          secondtag={"Category"}
+          secondtag={"Items"}
           thirdtag={"edit"}
         />
       </div>
